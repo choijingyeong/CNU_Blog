@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { deletePostById, getPostById } from '../api';
 import { IPost } from '../api/types';
@@ -60,14 +60,29 @@ const Text = styled.p`
 `;
 
 const Post = () => {
+  const navigate = useNavigate();
   const params = useParams();
-  const { postId } = params;
-  const { post, setPost } = useState<IPost | null>(null);
+  const { postId = '' } = params;
+  const [post, setPost] = useState<IPost | undefined>(undefined);
+
   const fetchPostById = async () => {
-    const { data } = await getPostById(postId);
+    const { data } = await getPostById(postId ?? '');
     const { post } = data;
     setPost(post);
   };
+
+  const clickDeleteButton = () => {
+    const result = window.confirm('정말로 삭제하시겠습니까?');
+    if (result) {
+      requestDeletePostById();
+    }
+  };
+
+  const requestDeletePostById = async () => {
+    await deletePostById(postId);
+    navigate('/');
+  }
+
   useEffect(() => {
     fetchPostById();
   }, []);
@@ -75,16 +90,7 @@ const Post = () => {
   if (!post) {
     return <NotFound />;
   }
-  const clickDeleteButton = () => {
-    const result = window.confirm('정말로 게시글을 삭제하시겠습니까?');
-    if (result) {
-      requestDeletePostById();
-    }
-  }; // todo (4) post 컴포넌트
-  const requestDeletePostById = async () => {
-    await deletePostById(postId);
-    navigate('/');
-  };
+
   return (
     <div style={{ margin: '5.5rem auto', width: '700px' }}>
       <div>
@@ -94,16 +100,15 @@ const Post = () => {
             <div>n분전</div>
           </Info>
           <div>
-            <Link to="/write" state={{ postId }} style={{ marginRight: 10 }}>
+            <Link to='/write' state={{ postId }}>
               <TextButton>수정</TextButton>
             </Link>
-
             <TextButton onClick={clickDeleteButton}>삭제</TextButton>
           </div>
         </Toolbar>
         {post?.tag && (
           <TagWrapper>
-            <Tag>#{post?.tag}</Tag>
+            <Tag>#{post.tag}</Tag>
           </TagWrapper>
         )}
       </div>

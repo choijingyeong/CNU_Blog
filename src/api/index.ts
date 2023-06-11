@@ -22,14 +22,21 @@ export const createPost = (title: string, contents: string, tag: string) => {
   });
 };
 
-export const getPostById = (id: number) => {
-  return instance.get(`/post/${id}`);
+export const getPostById = (id: string | undefined) => {
+  return instance.get(`/posts/${id}`);
 };
 
-export const updatePostById = () => {
-  return null;
+export const updatePostById = (id: string, title: string, content: string, tag: TAG) => {
+  return (
+    instance.put(`posts/${id}`),
+    {
+      title,
+      content,
+      tag,
+    }
+  );
 };
 
-export const deletePostById = () => {
-  return null;
+export const deletePostById = (id: string | undefined) => {
+  return instance.delete(`/posts/${id}`);
 };
