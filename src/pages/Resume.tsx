@@ -1,5 +1,14 @@
 const Resume = () => {
-  return <div>나는 프로젝트 내역</div>;
+  return <div>
+    <div>
+        <h1>수강 과목</h1>
+        <span>실전 코딩, 데이터베이스, 운영체제 등</span>
+    </div>
+    <div>
+        <h1>수강 과목</h1>
+        <span>실전 코딩, 데이터베이스, 운영체제 등</span>
+    </div>
+  </div>;
 };
 
 export default Resume;

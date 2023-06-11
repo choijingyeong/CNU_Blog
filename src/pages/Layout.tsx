@@ -62,8 +62,8 @@ const Layout = () => {
           <ProfilePicture src="https://t1.daumcdn.net/cfile/tistory/99107A335C1EED5005" alt="프로필 사진" />
         </div>
         <div>
-          <Name>제시</Name>
-          <Description>브롤스타즈~</Description>
+          <Name>진경</Name>
+          <Description>충남대학교 컴퓨터융합학부 21학번</Description>
         </div>
       </Profile>
       <Nav>
